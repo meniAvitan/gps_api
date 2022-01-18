@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mySqlConnectionDemo", "mySqlConnectionDemo.csproj", "{4453A7E7-1A2C-4574-B224-9344DF2FF47D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4453A7E7-1A2C-4574-B224-9344DF2FF47D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4453A7E7-1A2C-4574-B224-9344DF2FF47D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4453A7E7-1A2C-4574-B224-9344DF2FF47D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4453A7E7-1A2C-4574-B224-9344DF2FF47D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70569409-6789-41C4-949F-19B85AB6DD61}
+	EndGlobalSection
+EndGlobal
