@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace mySqlConnectionDemo.Data
 {
+
     public class Location
     {
         public int Id { get; set; }
@@ -13,5 +14,7 @@ namespace mySqlConnectionDemo.Data
         public float Lat { get; set; }
 
         public float Lng { get; set; }
+        
     }
+
 }

@@ -11,11 +11,11 @@ namespace mySqlConnectionDemo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonController : ControllerBase
+    public class LocationController : ControllerBase
     {
         private readonly MyDbContext _context;
 
-        public PersonController(MyDbContext context)
+        public LocationController(MyDbContext context)
         {
             _context = context;
         }
@@ -75,12 +75,16 @@ namespace mySqlConnectionDemo.Controllers
         // POST: api/Person
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Location>> PostPerson(Location person)
+        public async Task<ActionResult<Location>> PostLocation([FromBody] IEnumerable< Location> location)
         {
-            _context.Location.Add(person);
+           foreach(var item in location)
+            {
+                _context.Location.Add(item);
+            }
+            
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPerson", new { id = person.Id }, person);
+            return CreatedAtAction("GetPerson", new { id = location }, location);
         }
 
         // DELETE: api/Person/5
