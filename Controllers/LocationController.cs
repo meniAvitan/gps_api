@@ -20,46 +20,68 @@ namespace mySqlConnectionDemo.Controllers
             _context = context;
         }
 
-        // GET: api/Person
+        // GET: api/Location
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Location>>> GetPerson()
+        public async Task<ActionResult<IEnumerable<Location>>> GetLocation()
         {
             return await _context.Location.ToListAsync();
         }
 
-        // GET: api/Person/5
+        // GET: api/Location/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Location>> GetPerson(int id)
+        public async Task<ActionResult<Location>> GetLocation(int id)
         {
-            var person = await _context.Location.FindAsync(id);
+            var location = await _context.Location.FindAsync(id);
 
-            if (person == null)
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return person;
+            return location;
         }
 
-        // PUT: api/Person/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson(int id, Location person)
+        [HttpGet("routeId/{routeId}")]
+        public async Task<ActionResult<IEnumerable<Location>>> GetLocations(string routeId)
         {
-            if (id != person.Id)
+            var routes = _context.Location.Where(location => location.RouteId == routeId).AsEnumerable();
+           
+
+            if (routes == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(person).State = EntityState.Modified;
+            return new OkObjectResult(routes);
+        }
 
+        // PUT: api/Location/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+       /* [HttpPut("{routeId}")]
+        public async Task<IActionResult> PutLocation([FromBody] IEnumerable<Location> location, string routeId)
+        {
+
+            var res = _context.Location.Where(x => x.RouteId == routeId).FirstOrDefault();
+            if (res != null)
+            {
+
+                foreach (var item in location)
+                {
+                    if (routeId != item.RouteId)
+                    {
+                        return BadRequest();
+                    }
+                    _context.Entry(item).State = EntityState.Modified;
+                }
+            }
+          
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(id))
+                if (!LocationExists(routeId))
                 {
                     return NotFound();
                 }
@@ -71,8 +93,13 @@ namespace mySqlConnectionDemo.Controllers
 
             return NoContent();
         }
+*/
+        private bool LocationExists(string routeId)
+        {
+            throw new NotImplementedException();
+        }
 
-        // POST: api/Person
+        // POST: api/Location
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Location>> PostLocation([FromBody] IEnumerable< Location> location)
@@ -84,26 +111,45 @@ namespace mySqlConnectionDemo.Controllers
             
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPerson", new { id = location }, location);
+            return CreatedAtAction("GetLocation", new { id = location }, location);
         }
 
-        // DELETE: api/Person/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePerson(int id)
+
+        [HttpPut("routeId/{routeId}")]
+        public async Task<ActionResult<Location>> UpdateLocation([FromBody] List<Location> location, string routeId)
         {
-            var person = await _context.Location.FindAsync(id);
-            if (person == null)
+            var res = _context.Location.Where(x => x.RouteId == routeId).ToList();
+            
+            if (res != null)
+            {
+                for (int i = 0; i < location.Count(); i++)
+                {
+                    res[i].Lat = location[i].Lat;
+                    res[i].Lng = location[i].Lng;
+                }
+                
+                await _context.SaveChangesAsync();
+            }
+            return NoContent();
+        }
+
+        // DELETE: api/Location/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteLocation(int id)
+        {
+            var location = await _context.Location.FindAsync(id);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            _context.Location.Remove(person);
+            _context.Location.Remove(location);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PersonExists(int id)
+        private bool LocationExists(int id)
         {
             return _context.Location.Any(e => e.Id == id);
         }
